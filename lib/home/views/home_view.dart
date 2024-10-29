@@ -48,7 +48,7 @@ class HomeView extends GetView<HomeController> {
                     },
                     itemBuilder: (BuildContext context) {
                       return [
-                      const PopupMenuItem<String>(
+                      PopupMenuItem<String>(
                         value: 'delete',
                         child: Text('Delete'),
                       )];
