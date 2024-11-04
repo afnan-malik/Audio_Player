@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -16,17 +15,7 @@ class HomeController extends GetxController {
     // requestPermissions();
   }
 
-  playSong(String? uri)async{
-    try {
-      await audioPlayer.setAudioSource(
-        AudioSource.uri(Uri.parse(uri!))
-      );
-      audioPlayer.play();
-    } on Exception catch (e) {
-      // Handle errors
-      log("...........................................Error loading audio: $e");
-    }
-  }
+
 
   Future<void> requestPermissions() async {
     await Permission.storage.request();

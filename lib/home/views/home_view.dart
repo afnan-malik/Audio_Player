@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-
+import 'package:untitled1/app/routes/app_pages.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -34,7 +33,14 @@ class HomeView extends GetView<HomeController> {
               itemCount: item.data!.length,
               itemBuilder: (context,index){
                 return ListTile(
-                  onTap: (){controller.playSong(item.data![index].uri);},
+                  onTap: (){
+                    final songData = item.data![index]; // This should not be null
+                    if (songData != null) {
+                      Get.toNamed(Routes.PLAYER, arguments: songData);
+                    } else {
+                      print("Selected song data is null"); // Log if null
+                    }
+                    },
                   leading:QueryArtworkWidget(
                     id: item.data![index].id,
                     type: ArtworkType.AUDIO,
@@ -48,7 +54,7 @@ class HomeView extends GetView<HomeController> {
                     },
                     itemBuilder: (BuildContext context) {
                       return [
-                      PopupMenuItem<String>(
+                      const PopupMenuItem<String>(
                         value: 'delete',
                         child: Text('Delete'),
                       )];
