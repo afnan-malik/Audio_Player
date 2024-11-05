@@ -33,14 +33,19 @@ class HomeView extends GetView<HomeController> {
               itemCount: item.data!.length,
               itemBuilder: (context,index){
                 return ListTile(
-                  onTap: (){
-                    final songData = item.data![index]; // This should not be null
+                  onTap: () {
+                    final songData = item.data![index];
                     if (songData != null) {
-                      Get.toNamed(Routes.PLAYER, arguments: songData);
+                      // Sending current song and the whole song list to the Player screen
+                      Get.toNamed(Routes.PLAYER, arguments: {
+                        'currentSong': songData,
+                        'songList': item.data!, // Pass the entire song list
+                      });
                     } else {
-                      print("Selected song data is null"); // Log if null
+                      print("Selected song data is null");
                     }
-                    },
+                  },
+
                   leading:QueryArtworkWidget(
                     id: item.data![index].id,
                     type: ArtworkType.AUDIO,

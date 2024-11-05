@@ -25,7 +25,7 @@ class PlayerView extends GetView<PlayerController> {
                     alignment: Alignment.center,
                     decoration: const BoxDecoration(color: Colors.blue, shape: BoxShape.circle),
                     child: QueryArtworkWidget(
-                      id: controller.item.id,
+                      id: controller.item!.id,
                       type: ArtworkType.AUDIO,
                       artworkHeight: double.infinity,
                       artworkWidth: double.infinity,
@@ -42,7 +42,7 @@ class PlayerView extends GetView<PlayerController> {
                        Padding(
                          padding: const EdgeInsets.all(12.0),
                          child: Text(
-                          controller.item.displayNameWOExt,
+                          controller.item!.displayName,
                           style: const TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
                                                ),
                        ),
@@ -50,7 +50,7 @@ class PlayerView extends GetView<PlayerController> {
                         height: 20,
                       ),
                        Text(
-                         controller.item.artist.toString(),
+                         controller.item!.artist.toString(),
                         style: const TextStyle(color: Colors.black, fontSize: 16),
                       ),
                       const SizedBox(
@@ -59,20 +59,34 @@ class PlayerView extends GetView<PlayerController> {
                       Obx(()=>Row(
                         children: [
                           Text(
-                            controller.duration.value,
+                            controller.position.value,
                             style:  TextStyle(color: Colors.black),
                           ),
-                          Expanded(child: Slider(value: 0.0, inactiveColor: Colors.black, activeColor: Colors.yellow, thumbColor: Colors.red, onChanged: (newValue) {})),
+                          Expanded(child:
+                          Slider(
+                              inactiveColor: Colors.black,
+                              activeColor: Colors.yellow,
+                              thumbColor: Colors.red,
+                              min: const Duration(seconds: 0).inSeconds.toDouble(),
+                              max: controller.max.value,
+                              value: controller.value.value,
+                              onChanged: (newValue) {
+                                controller.changeDuration(newValue.toInt());
+                                newValue=newValue;
+                              }
+                          )),
                           Text(
-                            controller.position.value,
-                            style: TextStyle(color: Colors.black),
+                            controller.duration.value,
+                            style: const TextStyle(color: Colors.black),
                           ),
                         ],
                       )),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          IconButton(onPressed: () {}, icon: const Icon(Icons.skip_previous, size: 40)),
+                          IconButton(onPressed: () {
+                            controller.previousSong();
+                          }, icon: const Icon(Icons.skip_previous, size: 40)),
                           CircleAvatar(
                               radius: 35,
                               backgroundColor: Colors.black,
@@ -80,6 +94,7 @@ class PlayerView extends GetView<PlayerController> {
                                 scale: 2.5,
                                 child:IconButton(
                                   onPressed: () {
+                                    controller.prepareAudio();
                                     controller.playPauseSong();
                                   },
                                   icon: Obx(() => Icon(
@@ -88,7 +103,9 @@ class PlayerView extends GetView<PlayerController> {
                                   )),
                                 ),
                               )),
-                          IconButton(onPressed: () {}, icon: const Icon(Icons.skip_next, size: 40)),
+                          IconButton(onPressed: (){
+                            controller.nextSong();
+                          }, icon: const Icon(Icons.skip_next, size: 40)),
                         ],
                       )
                     ],
