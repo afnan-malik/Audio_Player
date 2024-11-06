@@ -60,7 +60,7 @@ class PlayerView extends GetView<PlayerController> {
                         children: [
                           Text(
                             controller.position.value,
-                            style:  TextStyle(color: Colors.black),
+                            style:  const TextStyle(color: Colors.black),
                           ),
                           Expanded(child:
                           Slider(
