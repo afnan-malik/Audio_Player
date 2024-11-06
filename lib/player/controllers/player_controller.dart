@@ -38,6 +38,9 @@ class PlayerController extends GetxController {
     audioPlayer.positionStream.listen((p){
       position.value=p.toString().split(".")[0];
       value.value=p.inSeconds.toDouble();
+      if (value.value >= max.value) {
+        nextSong();
+      }
     });
   }
   changeDuration(seconds){
@@ -59,6 +62,7 @@ class PlayerController extends GetxController {
       item = songList[currentIndex + 1];
       prepareAudio();
       audioPlayer.play();
+      update();
     }
   }
 
@@ -68,6 +72,7 @@ class PlayerController extends GetxController {
       item = songList[currentIndex - 1];
       prepareAudio();
       audioPlayer.play();
+      update();
     }
   }
 
@@ -95,6 +100,8 @@ class PlayerController extends GetxController {
       log("Error preparing audio: $e");
     }
   }
+
+
 
   @override
   void onReady() {

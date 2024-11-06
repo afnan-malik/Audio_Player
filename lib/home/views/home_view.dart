@@ -1,4 +1,4 @@
-
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -50,32 +50,31 @@ class HomeView extends GetView<HomeController> {
                             'songList': item.data!, // Pass the entire song list
                           });
                         } else {
-                          print("Selected song data is null");
+                          log("Selected song data is null");
                         }
                       },
 
                       leading:QueryArtworkWidget(
                         id: item.data![index].id,
                         type: ArtworkType.AUDIO,
-                        nullArtworkWidget:  const Icon(Icons.music_note,color: Colors.redAccent,),
+                        nullArtworkWidget:  const Icon(Icons.music_note,color: Color(0xFFFF5555),),
                       ),
                       title: Text(item.data![index].displayNameWOExt,style: const TextStyle(fontSize: 14),),
                       subtitle: Text(item.data![index].artist.toString()),
-                      trailing:  PopupMenuButton<String>(
-                        onSelected: (value) {
-                          if (value == 'delete') {
-                            var file=item.data![index].uri;
-                            controller.deleteAudioFile(file!);
-                          }
-                        },
-                        itemBuilder: (BuildContext context) {
-                          return [
-                          const PopupMenuItem<String>(
-                            value: 'delete',
-                            child: Text('Delete'),
-                          )];
-                        },
-                      ),
+                      // trailing:  PopupMenuButton<String>(
+                      //   onSelected: (value) {
+                      //     if (value == 'delete') {
+                      //       var file=item.data![index].uri;
+                      //     }
+                      //   },
+                      //   itemBuilder: (BuildContext context) {
+                      //     return [
+                      //     const PopupMenuItem<String>(
+                      //       value: 'delete',
+                      //       child: Text('Delete'),
+                      //     )];
+                      //   },
+                      // ),
                     ),
                   ),
                 );
