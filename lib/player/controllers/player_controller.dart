@@ -14,6 +14,7 @@ class PlayerController extends GetxController {
   var position = "".obs;
   var max = 0.0.obs;
   var value = 0.0.obs;
+  bool shuffle=false;
 
 
   @override
@@ -24,6 +25,7 @@ class PlayerController extends GetxController {
     songList = List<SongModel>.from(args['songList']);
 
     _initAudioPlayer();
+    playPauseSong();
     updatePosition();
     prepareAudio();
   }
@@ -38,8 +40,11 @@ class PlayerController extends GetxController {
     audioPlayer.positionStream.listen((p){
       position.value=p.toString().split(".")[0];
       value.value=p.inSeconds.toDouble();
-      if (value.value >= max.value) {
+
+      if (value.value >= max.value && shuffle) {
         nextSong();
+      }else if(value.value>=max.value){
+        playPauseSong();
       }
     });
   }

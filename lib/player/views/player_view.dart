@@ -113,13 +113,13 @@ class _PlayerViewState extends State<PlayerView> with SingleTickerProviderStateM
                         padding: const EdgeInsets.all(12.0),
                         child: Text(
                           controller.item!.displayName,
-                          style: const TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                          style: const TextStyle(color:  Color(0xFF454444), fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ),
                       const SizedBox(height: 20),
                       Text(
                         controller.item!.artist.toString(),
-                        style: const TextStyle(color: Colors.black, fontSize: 16),
+                        style: const TextStyle(color: Color(0xFF454444), fontSize: 16),
                       ),
                       const SizedBox(height: 20),
                       Obx(
@@ -131,7 +131,7 @@ class _PlayerViewState extends State<PlayerView> with SingleTickerProviderStateM
                             ),
                             Expanded(
                               child: Slider(
-                                inactiveColor: Colors.black,
+                                inactiveColor:  const Color(0xFF454444),
                                 activeColor: const Color(0xFFFF5555),
                                 thumbColor: Colors.red,
                                 min: const Duration(seconds: 0).inSeconds.toDouble(),
@@ -145,7 +145,7 @@ class _PlayerViewState extends State<PlayerView> with SingleTickerProviderStateM
                             ),
                             Text(
                               controller.duration.value,
-                              style: const TextStyle(color: Colors.black),
+                              style: const TextStyle(color: Color(0xFF454444),)
                             ),
                           ],
                         ),
@@ -159,7 +159,7 @@ class _PlayerViewState extends State<PlayerView> with SingleTickerProviderStateM
                           ),
                           CircleAvatar(
                             radius: 35,
-                            backgroundColor: Colors.black,
+                            backgroundColor:  const Color(0xFF454444),
                             child: Transform.scale(
                               scale: 2.5,
                               child: IconButton(
@@ -182,7 +182,25 @@ class _PlayerViewState extends State<PlayerView> with SingleTickerProviderStateM
                           ),
                         ],
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                              onPressed: (){
+                                controller.shuffle=!controller.shuffle;
+                                controller.update();
+                              },
+                              icon: controller.shuffle?
+                              const Icon(Icons.shuffle, size: 30)
+                                  :const Icon(Icons.repeat, size: 30)
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
+
                   ),
                 ),
               ),
